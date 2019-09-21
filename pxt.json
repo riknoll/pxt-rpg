@@ -1,13 +1,19 @@
 {
     "name": "battle",
     "dependencies": {
-        "device": "*"
+        "device": "*",
+        "animation": "*"
     },
     "description": "",
     "files": [
         "main.ts",
         "README.md",
-        "ui.ts"
+        "ui.ts",
+        "action.ts",
+        "damage.ts",
+        "target.ts",
+        "orchestrator.ts",
+        "actor.ts"
     ],
     "preferredEditor": "tsprj",
     "testFiles": [
