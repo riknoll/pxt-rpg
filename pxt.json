@@ -1,0 +1,16 @@
+{
+    "name": "battle",
+    "dependencies": {
+        "device": "*"
+    },
+    "description": "",
+    "files": [
+        "main.ts",
+        "README.md",
+        "ui.ts"
+    ],
+    "preferredEditor": "tsprj",
+    "testFiles": [
+        "test.ts"
+    ]
+}
