@@ -40,67 +40,60 @@ namespace rpg {
 
     }
 
-    export class Actor {
+    export class Actor extends Automata {
         public sprite: Sprite;
-        protected state: ActorState;
-        protected transitionTime: number;
+        public def: ActorDefinition;
 
-        constructor(public readonly def: ActorDefinition) {
+        constructor(def: ActorDefinition) {
+            super();
             this.state = ActorState.Hidden;
+            this.def = def;
         }
 
-        enterScene(entrancePath: string, duration: number) {
+        enterScene(x: number, y: number, entrancePath: string, duration: number) {
             if (!this.sprite) this.sprite = sprites.create(this.def.staticImage);
 
-            this.state = ActorState.Entering;
-            this.transitionTime = control.millis() + duration;
+            this.sprite.setPosition(x, y);
+            this.transitionState(ActorState.Entering);
+            this.transitionState(ActorState.Idle, duration);
             this.moveAndAnimate(entrancePath, duration, this.def.entranceFrames);
         }
 
         exitScene(exitPath: string, duration: number) {
             if (!this.sprite) this.sprite = sprites.create(img`1`);
 
-            this.state = ActorState.Exiting;
-            this.transitionTime = control.millis() + duration;
+            this.transitionState(ActorState.Exiting);
+            this.transitionState(ActorState.Hidden, duration);
             this.moveAndAnimate(exitPath, duration, this.def.exitFrames);
-        }
-
-        update() {
-            if (this.transitionTime != undefined) {
-                const time = control.millis();
-
-                if (time > this.transitionTime) {
-                    this.stopAllAnimations();
-
-                    switch (this.state) {
-                        case ActorState.Entering:
-                            this.state = ActorState.Idle;
-                            if (this.def.idleFrames) {
-                                this.applyAnimation(
-                                    this.def.idleFrames.frames, 
-                                    this.def.idleFrames.interval || 100, 
-                                    !!this.def.idleFrames.loop
-                                );
-                            }
-                            else {
-                                this.sprite.setImage(this.def.staticImage);
-                            }
-                            break;
-                        case ActorState.Exiting:
-                            this.state = ActorState.Hidden;
-                            this.dispose();
-                            break;
-                    }
-
-                    this.transitionTime = undefined;
-                }
-            }
         }
 
         dispose() {
             if (!this.sprite) return;
             this.sprite.destroy();
             this.sprite = undefined;
+        }
+
+        protected onStateTransition(oldState: ActorState, newState: ActorState) {
+            this.stopAllAnimations();
+
+            console.log("" + newState);
+            switch (newState) {
+                case ActorState.Hidden:
+                    this.dispose();
+                    break;
+                case ActorState.Idle:
+                    if (this.def.idleFrames) {
+                        this.applyAnimation(
+                            this.def.idleFrames.frames,
+                            this.def.idleFrames.interval || 100,
+                            !!this.def.idleFrames.loop
+                        );
+                    }
+                    else {
+                        this.sprite.setImage(this.def.staticImage);
+                    }
+                    break;
+            }
         }
 
         protected moveAndAnimate(movePath: string, duration: number, anim: AnimationDefinition) {

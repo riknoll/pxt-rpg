@@ -13,7 +13,8 @@
         "damage.ts",
         "target.ts",
         "orchestrator.ts",
-        "actor.ts"
+        "actor.ts",
+        "automata.ts"
     ],
     "preferredEditor": "tsprj",
     "testFiles": [
