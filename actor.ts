@@ -1,10 +1,4 @@
 namespace rpg {
-    export interface AnimationDefinition {
-        frames: Image[];
-        interval?: number;
-        loop?: boolean;
-    }
-
     export class ActorDefinition {
         idleFrames: AnimationDefinition;
         entranceFrames: AnimationDefinition;

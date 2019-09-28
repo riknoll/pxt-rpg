@@ -15,7 +15,9 @@
         "orchestrator.ts",
         "actor.ts",
         "automata.ts",
-        "effect.ts"
+        "effect.ts",
+        "battleUI.ts",
+        "animation.ts"
     ],
     "preferredEditor": "tsprj",
     "testFiles": [
