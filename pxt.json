@@ -14,7 +14,8 @@
         "target.ts",
         "orchestrator.ts",
         "actor.ts",
-        "automata.ts"
+        "automata.ts",
+        "effect.ts"
     ],
     "preferredEditor": "tsprj",
     "testFiles": [

@@ -37,17 +37,18 @@ namespace rpg {
         Exiting,
         Idle,
         Hidden
-
     }
 
     export class Actor extends Automata {
         public sprite: Sprite;
         public def: ActorDefinition;
+        public effects: Effect[];
 
         constructor(def: ActorDefinition) {
             super();
             this.state = ActorState.Hidden;
             this.def = def;
+            this.effects = [];
         }
 
         enterScene(x: number, y: number, entrancePath: string, duration: number) {

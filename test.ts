@@ -13,6 +13,10 @@ namespace rpg {
     }
 
     function initHero() {
+        // Compiler bug... Assertion fails if this constructor isn't called
+        let e = new Effect(null);
+
+
         const char1 = new ActorDefinition("hero", sprites.castle.heroWalkFront1, 10);
 
         char1.setEntranceFrames({
@@ -73,6 +77,7 @@ namespace rpg {
             loop: true,
             interval: 200
         })
+
 
         char2.setExitFrames({
             frames: [
